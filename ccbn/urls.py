@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^getprestamodata/$', 'sistema.views.get_prestamo_data', name='get_prestamo_data'),
 
     url(r'^$', 'django.contrib.auth.views.login', {'template_name': 'index.html'}),
+    url(r'^logout/$', 'ccbn.views.logout_page'),
     url(r'^programas/$', 'ccbn.views.salidas_list', name='salidas_list'),    
     url(r'^programas/indicadores/$', 'django.contrib.auth.views.login', {'template_name': 'indicadores.html'}),
     url(r'^programas/indicadores/(?P<id>\d+)/$', 'ccbn.views.estrategia_detail', name='estrategia_detail'),    

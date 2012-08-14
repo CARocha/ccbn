@@ -1,7 +1,7 @@
 # Create your views here.
 from django.shortcuts import render_to_response, get_object_or_404
 from django.db.models import get_model
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.utils import simplejson
 from django.db.models.fields import CharField, IntegerField
@@ -9,6 +9,11 @@ from django.db.models.fields.related import ForeignKey
 from sistema.models import Salida, Modulo, Estrategia
 from ccbn.utils import get_porcentaje
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+
+def logout_page(request):
+  logout(request)
+  return HttpResponseRedirect('/')
 
 def testing(request):
     modulos = Modulo.objects.all()
