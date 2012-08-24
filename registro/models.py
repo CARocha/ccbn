@@ -155,8 +155,9 @@ class Persona(models.Model):
     j_segundo_apellido = models.CharField(max_length=50, blank=True, default='', verbose_name = u'segundo apellido')
     j_oficio = models.ForeignKey(Oficio, related_name='oficio_jefe', blank=True, verbose_name = u'oficio', null=True)
 
-    #def __unicode__(self):
-    #    return u'%s' % (self.codigo,)
+    def __unicode__(self):
+        return u'%s - %s %s %s %s' % (self.codigo, self.primer_nombre, self.segundo_nombre, 
+                                 self.primer_apellido, self.segundo_apellido)
 
     def individuos(self):
         return u'%s - %s %s %s %s' % (self.codigo, self.primer_nombre, self.segundo_nombre, 
@@ -167,6 +168,9 @@ class Persona(models.Model):
     def get_full_name(self):
         return u'%s %s' % (self.primer_nombre, self.primer_apellido)
 
+    #class Meta:
+    #    unique_together = (("primer_nombre","segundo_nombre"),("primer_apellido","segundo_nombre"),)
+    
     def save(self, *args, **kwargs):
         if not self.id:
             self.codigo = Persona.objects.all().count() + 1
