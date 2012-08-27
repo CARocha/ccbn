@@ -29,6 +29,7 @@ class Municipio(models.Model):
     class Meta:
         verbose_name_plural = "Municipios"
         ordering = ['departamento__nombre',]
+        unique_together = ('nombre',)
 
 CIUDAD_TIPO = ((1, 'Ciudad'), (2, 'Comunidad'))
 
@@ -57,6 +58,12 @@ class Barrio(models.Model):
     class Meta:
         verbose_name = 'Barrio/Comarca'
         verbose_name_plural = 'Barrios/Comarcas'
+        unique_together = ('nombre',)
 
     def __unicode__(self):
         return self.nombre
+
+    def barrios(self):
+        return self.nombre
+    barrios.admin_order_field = "nombre"
+    barrios.short_description = "Barrios"

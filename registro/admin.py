@@ -207,7 +207,7 @@ class PersonaAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Datos personales', {'fields': [('primer_nombre', 'segundo_nombre'), ('primer_apellido', 'segundo_apellido'), 
                                         ('sexo', 'fecha_nacimiento'), ('codigo', 'cedula')]}),
-        (u'Relación con CCBN', {'fields': [('docente', 'personal', 'alumno', 'visitante'), ('becado', 'promotor', 'beneficiario', 'integrante'), 'acompanante']}),
+        (u'Relación con CCBN', {'fields': [('docente', 'personal', 'alumno', 'visitante','acompanante'), ('becado', 'promotor', 'beneficiario', 'integrante'),]}),
         ('Ubicacion', {'fields': [('municipio', 'ciudad'), ('barrio'), 'direccion', ('telefono', 'celular')]}),
         (u'Información Académica', {'fields': [('nivel_academico', 'nivel_estudio'), 'centro_actual']}),
         ('Datos del Hogar', {'fields': [('tiene_hijos', 'oficio'), 'con_quien_vive', 'tipo_familia',]}),
@@ -274,6 +274,15 @@ admin.site.register(Persona, PersonaAdmin)
 admin.site.register(Pariente)
 admin.site.register(Relacion)
 admin.site.register(Ciudad)
-admin.site.register(Barrio)
+class BarrioAdmin(admin.ModelAdmin):
+    list_display = ['barrios']
+    search_fields = ('nombre',)
+
+admin.site.register(Barrio, BarrioAdmin)
 admin.site.register(Oficio)
-admin.site.register(Colegio)
+
+class ColegioAdmin(admin.ModelAdmin):
+    list_display = ['escuelas']
+    search_fields = ('nombre',)
+
+admin.site.register(Colegio, ColegioAdmin)

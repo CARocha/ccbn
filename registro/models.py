@@ -77,9 +77,15 @@ class Colegio(models.Model):
     def __unicode__(self):
         return u'%s' % self.nombre
 
+    def escuelas(self):
+        return u'%s' % self.nombre
+    escuelas.admin_order_field = "nombre"
+    escuelas.short_description = "Escuelas"
+
     class Meta:
         verbose_name = u'Colegio/Centro de estudio'
         verbose_name_plural = u'Colegios/Centros de estudio'
+        unique_together = ('nombre',)
 
 class Oficio(models.Model):
     nombre = models.CharField(max_length=200, unique=True)
@@ -160,16 +166,19 @@ class Persona(models.Model):
                                  self.primer_apellido, self.segundo_apellido)
 
     def individuos(self):
-        return u'%s - %s %s %s %s' % (self.id, self.primer_nombre, self.segundo_nombre, 
-                                 self.primer_apellido, self.segundo_apellido)
-    individuos.admin_order_field = 'primer_nombre'
+        return u'%s - %s %s %s %s' % (self.id, self.primer_apellido,self.segundo_apellido,
+                                     self.primer_nombre, self.segundo_nombre, 
+                                    )
+    individuos.admin_order_field = 'primer_apellido'
     individuos.short_description = 'Individuos'
 
     def get_full_name(self):
         return u'%s %s' % (self.primer_nombre, self.primer_apellido)
 
-    #class Meta:
-    #    unique_together = (("primer_nombre","segundo_nombre"),("primer_apellido","segundo_nombre"),)
+    class Meta:
+       unique_together = (("primer_nombre","segundo_nombre"),
+                          ("sexo","fecha_nacimiento"),
+                          )
     
     def save(self, *args, **kwargs):
         if not self.id:
