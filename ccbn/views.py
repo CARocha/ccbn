@@ -15,6 +15,9 @@ def logout_page(request):
   logout(request)
   return HttpResponseRedirect('/')
 
+import datetime
+
+
 def testing(request):
     modulos = Modulo.objects.all()
     return render_to_response('index2.html', RequestContext(request, locals()))
@@ -63,7 +66,11 @@ def parse_filters(qs):
         else:
             key = filtro.field
 
-        dicc[key] = filtro.value
+        # validaciones para algunos tipos de datos: fechas, ...
+        if 'datetime' in filtro.value:
+            dicc[key] = eval(filtro.value)
+        else:
+            dicc[key] = filtro.value
     
     return dicc
 
@@ -100,7 +107,12 @@ def parse_salida(salida):
     # verificando splits y obteniendo valores
     splits_dicc = {}
     for split in salida.querysplit_set.all():
-        sub_qs = query.filter(**{'%s%s' % (split.field, split.criteria):split.value})
+        if 'datetime' in split.value:
+            valor = eval(split.value)
+        else:
+            valor = split.value
+        sub_qs = query.filter(**{'%s%s' % (split.field, split.criteria):valor})
+        
         if split.tipo_meta == 1: # percent                
             splits_dicc[split.id] = get_porcentaje(query.count(), sub_qs.count())
         elif split.tipo_meta == 2: # count

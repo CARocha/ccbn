@@ -110,6 +110,7 @@ class Persona(models.Model):
     sexo = models.IntegerField(choices=((1, 'Masculino'), (2, 'Femenino')))
     fecha_nacimiento = models.DateField()
     cedula = models.CharField(max_length=20, blank=True, default='')
+    tiene_hijos = models.BooleanField()
     
     # relacion con ccbn
     docente = models.BooleanField()
@@ -120,6 +121,7 @@ class Persona(models.Model):
     promotor = models.BooleanField()
     beneficiario = models.BooleanField(verbose_name=u'Beneficiario de programa')
     integrante = models.BooleanField(verbose_name=u'Integrante promoción artística')
+    acompanante = models.BooleanField(verbose_name=u'Acompañante')
     
     municipio = models.ForeignKey(Municipio)
     ciudad = ChainedForeignKey(
@@ -157,9 +159,18 @@ class Persona(models.Model):
         return u'%s - %s %s %s %s' % (self.codigo, self.primer_nombre, self.segundo_nombre, 
                                  self.primer_apellido, self.segundo_apellido)
 
+    def individuos(self):
+        return u'%s - %s %s %s %s' % (self.codigo, self.primer_nombre, self.segundo_nombre, 
+                                 self.primer_apellido, self.segundo_apellido)
+    individuos.admin_order_field = 'primer_nombre'
+    individuos.short_description = 'Individuos'
+
     def get_full_name(self):
         return u'%s %s' % (self.primer_nombre, self.primer_apellido)
 
+    #class Meta:
+    #    unique_together = (("primer_nombre","segundo_nombre"),("primer_apellido","segundo_nombre"),)
+    
     def save(self, *args, **kwargs):
         if not self.id:
             self.codigo = Persona.objects.all().count() + 1
@@ -388,29 +399,14 @@ class BaseRegistroPromocion(BaseRegistroAnual):
     class Meta:
         abstract = True
 
-# Modelos de registro en promocion artistica
-class RegistroMusica(BaseRegistroPromocion):
-    grupo = models.ForeignKey(Musica)
-    class Meta:
-        verbose_name_plural = u'Registro Grupo de Musica'
+# Creando el modelo para inscripcion en grupo. Esta es una modificacion
+# para unificar los indicadores de Grupos de Promocion y obtener mas 
+# facil y limpiamente los indicadores
+class InscripcionGrupo(BaseRegistroPromocion):
+    grupo = models.ForeignKey(Grupo)
+    
+    # solo para uso del sistema
+    date_time = models.DateTimeField(auto_now_add=True)
 
-class RegistroTeatro(BaseRegistroPromocion):
-    grupo = models.ForeignKey(Teatro)
     class Meta:
-        verbose_name_plural = u'Registro Grupo de Musica'
-
-class RegistroDanza(BaseRegistroPromocion):
-    grupo = models.ForeignKey(Danza)
-    class Meta:
-        verbose_name_plural = u'Registro Grupo de Danza'
-
-class RegistroCoro(BaseRegistroPromocion):
-    grupo = models.ForeignKey(Coro)
-    class Meta:
-        verbose_name_plural = u'Registro Grupo de Coro'
-
-class RegistroPintura(BaseRegistroPromocion):
-    grupo = models.ForeignKey(Pintura)
-    class Meta:
-        verbose_name_plural = u'Registro Grupo de Pintura'
-
+        verbose_name_plural = u'Inscripciones en Grupos'

@@ -141,27 +141,51 @@ class RegistroFamiliaBecadoInline(admin.TabularInline):
 # Inlines de registro en grupos musicales
 class BasePromocionInline(admin.TabularInline):
     fields = ['fecha', 'grupo']
+    model = InscripcionGrupo
     extra = 1
+    # key_code = submodulo code ejm: grupomusica, grupoteatro
+    # default grupomusica
+    key_code = 'grupomusica' 
+
+    def queryset(self, request):
+        # override para solo mostrar los registros de Grupo Artistico de Musica
+        queryset = super(BasePromocionInline, self).queryset(request)\
+                    .filter(grupo__submodulo__code=self.key_code)
+
+        if not self.has_change_permission(request):
+            queryset = queryset.none()
+        return queryset
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        # override para sobreescribir el form field y agregar la clase CSS chozen
+        # para agregar el filtro en los combos
+        if db_field.name == 'grupo':
+            return forms.ModelChoiceField(
+                label=u'Seleccionar Grupo', 
+                queryset=Grupo.objects.filter(submodulo__code=self.key_code), 
+                widget=forms.Select(attrs={'class': 'chozen'})
+            )
+        return super(BasePromocionInline, self).formfield_for_dbfield(db_field, **kwargs)
 
 class RegistroMusicaInline(BasePromocionInline):
-    model = RegistroMusica    
-    verbose_name_plural = u'Registro grupo de música'
+    key_code = 'grupomusica'
+    verbose_name_plural = u'Grupo Musica'
 
 class RegistroTeatroInline(BasePromocionInline):
-    model = RegistroTeatro
-    verbose_name_plural = u'Registro grupo de teatro'
+    key_code = 'grupoteatro'
+    verbose_name_plural = u'Grupo de teatro'
 
 class RegistroDanzaInline(BasePromocionInline):
-    model = RegistroDanza
-    verbose_name_plural = u'Registro grupo de danza'
+    key_code = 'grupodanza'
+    verbose_name_plural = u'Grupo de danza'
 
 class RegistroCoroInline(BasePromocionInline):
-    model = RegistroCoro
-    verbose_name_plural = u'Registro grupo de coro'
+    key_code = 'grupocoro'
+    verbose_name_plural = u'Grupo de coro'
 
 class RegistroPinturaInline(BasePromocionInline):
-    model = RegistroPintura
-    verbose_name_plural = u'Registro grupo de pintura'
+    key_code = 'grupopintura'
+    verbose_name_plural = u'Grupo de pintura'
 
 # Programa VBG Interna
 class InscripcionPVBGInternaInline(admin.TabularInline):
@@ -177,16 +201,16 @@ class InscripcionPVBGExternaInline(admin.TabularInline):
 
 class PersonaAdmin(admin.ModelAdmin):
     list_filter = ['barrio','ciudad']
-    search_fields = ['primer_nombre','segundo_nombre','primer_apellido','segundo_apellido']
-    list_display = ['__unicode__','fecha_nacimiento','sexo','municipio', 'ciudad','barrio']
+    search_fields = ['primer_nombre','segundo_nombre','primer_apellido','segundo_apellido', 'codigo']
+    list_display = ['individuos','fecha_nacimiento','sexo','municipio', 'ciudad','barrio']
     add_form_template = 'admin/registro/add_form_template.html'
     fieldsets = [
         ('Datos personales', {'fields': [('primer_nombre', 'segundo_nombre'), ('primer_apellido', 'segundo_apellido'), 
                                         ('sexo', 'fecha_nacimiento'), ('codigo', 'cedula')]}),
-        (u'Relación con CCBN', {'fields': [('docente', 'personal', 'alumno', 'visitante'), ('becado', 'promotor', 'beneficiario', 'integrante')]}),
+        (u'Relación con CCBN', {'fields': [('docente', 'personal', 'alumno', 'visitante'), ('becado', 'promotor', 'beneficiario', 'integrante'), 'acompanante']}),
         ('Ubicacion', {'fields': [('municipio', 'ciudad'), ('barrio'), 'direccion', ('telefono', 'celular')]}),
         (u'Información Académica', {'fields': [('nivel_academico', 'nivel_estudio'), 'centro_actual']}),
-        ('Datos del Hogar', {'fields': ['oficio', 'con_quien_vive', 'tipo_familia',]}),
+        ('Datos del Hogar', {'fields': [('tiene_hijos', 'oficio'), 'con_quien_vive', 'tipo_familia',]}),
         ('Jefe de Familia', {'fields': [('jefe_familia', 'j_oficio'), ('j_primer_nombre', 'j_segundo_nombre'), 
                                         ('j_primer_apellido', 'j_segundo_apellido')],})
                                                                                      

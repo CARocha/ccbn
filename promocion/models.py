@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from atencionintegral.models import generate_years_choice, START_YEAR
+from sistema.models import SubModulo
 
 class BasePromocion(models.Model):
     nombre = models.CharField(max_length=100)
@@ -13,30 +14,18 @@ class BasePromocion(models.Model):
     class Meta:
         abstract = True
 
-class Musica(BasePromocion):
-    class Meta:
-        verbose_name = u'Grupo de música'
-        verbose_name_plural = u'Grupos de música'
+class Grupo(models.Model):
+    nombre = models.CharField(max_length=100)
+    semestre = models.IntegerField(choices=((1, '1er Semestre'), (2, '2do Semestre')))
+    year = models.IntegerField('Año', choices=generate_years_choice(START_YEAR))
+    submodulo = models.ForeignKey(SubModulo, verbose_name = u'Tipo', 
+                                  limit_choices_to = {'parent_module__code': 'module4'})
 
-class Teatro(BasePromocion):
-    class Meta:
-        verbose_name = u'Grupo de teatro'
-        verbose_name_plural = u'Grupos de teatro'
+    def __unicode__(self):
+        return u'%s %s %s' % (self.nombre, self.get_semestre_display(), self.year)
 
-class Danza(BasePromocion):
     class Meta:
-        verbose_name = u'Grupo de danza'
-        verbose_name_plural = u'Grupos de danza'
-
-class Coro(BasePromocion):
-    class Meta:
-        verbose_name = u'Grupo de coro'
-        verbose_name_plural = u'Grupos de coro'
-
-class Pintura(BasePromocion):
-    class Meta:
-        verbose_name = u'Grupo de pintura'
-        verbose_name_plural = u'Grupos de pintura'
+        verbose_name_plural = u'Grupos Artísticos'
 
 CHOICE_ACTIVIDAD_COLECTIVA = ((1, u'Concierto de música'), (2, u'Coro'), (3, u'Exposición'),
                               (4, u'Obra de teatro'), (5, u'Multimedia'))
