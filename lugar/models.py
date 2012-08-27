@@ -55,10 +55,11 @@ class Barrio(models.Model):
     tipo = models.IntegerField(choices=BARRIO_TIPO)
     nombre = models.CharField(max_length=40)
     distrito = models.IntegerField(choices=DISTRITO_TIPO)
+
     class Meta:
         verbose_name = 'Barrio/Comarca'
         verbose_name_plural = 'Barrios/Comarcas'
-        unique_together = ('nombre',)
+        unique_together = ('nombre','ciudad')
 
     def __unicode__(self):
         return self.nombre
