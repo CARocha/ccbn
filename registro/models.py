@@ -176,8 +176,7 @@ class Persona(models.Model):
         return u'%s %s' % (self.primer_nombre, self.primer_apellido)
 
     class Meta:
-       unique_together = (("primer_nombre","segundo_nombre"),
-                          ("sexo","fecha_nacimiento"),
+       unique_together = (("primer_nombre","primer_apellido","sexo","fecha_nacimiento"),
                           )
     
     def save(self, *args, **kwargs):
