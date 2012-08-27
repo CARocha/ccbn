@@ -112,7 +112,7 @@ class Persona(models.Model):
     primer_apellido = models.CharField(max_length=50)
     segundo_apellido = models.CharField(max_length=50, blank=True, default='')
 
-    codigo = models.IntegerField(help_text=u'Autogenerado por el sistema', default=000)
+    codigo = models.IntegerField(help_text=u'Autogenerado por el sistema', default=000,editable=False)
     sexo = models.IntegerField(choices=((1, 'Masculino'), (2, 'Femenino')))
     fecha_nacimiento = models.DateField()
     cedula = models.CharField(max_length=20, blank=True, default='')
