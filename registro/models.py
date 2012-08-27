@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 from django.db import models
 from smart_selects.db_fields import ChainedForeignKey 
 from lugar.models import *
@@ -156,11 +156,11 @@ class Persona(models.Model):
     j_oficio = models.ForeignKey(Oficio, related_name='oficio_jefe', blank=True, verbose_name = u'oficio', null=True)
 
     def __unicode__(self):
-        return u'%s - %s %s %s %s' % (self.codigo, self.primer_nombre, self.segundo_nombre, 
+        return u'%s - %s %s %s %s' % (self.id, self.primer_nombre, self.segundo_nombre, 
                                  self.primer_apellido, self.segundo_apellido)
 
     def individuos(self):
-        return u'%s - %s %s %s %s' % (self.codigo, self.primer_nombre, self.segundo_nombre, 
+        return u'%s - %s %s %s %s' % (self.id, self.primer_nombre, self.segundo_nombre, 
                                  self.primer_apellido, self.segundo_apellido)
     individuos.admin_order_field = 'primer_nombre'
     individuos.short_description = 'Individuos'
