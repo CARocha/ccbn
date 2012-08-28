@@ -86,6 +86,7 @@ class Colegio(models.Model):
         verbose_name = u'Colegio/Centro de estudio'
         verbose_name_plural = u'Colegios/Centros de estudio'
         unique_together = ('nombre',)
+        ordering = ['nombre']
 
 class Oficio(models.Model):
     nombre = models.CharField(max_length=200, unique=True)

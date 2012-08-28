@@ -223,6 +223,9 @@ class PersonaAdmin(admin.ModelAdmin):
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
     readonly_fields = ('codigo', )
+
+
+
     def response_add(self, request, obj):
         return super(PersonaAdmin, self).response_add(request, obj, '../%s/#shva')
 
