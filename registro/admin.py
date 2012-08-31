@@ -4,6 +4,30 @@ from django import forms
 from django.forms import CheckboxSelectMultiple
 from prevencion.models import InscripcionPrevencionInterna, InscripcionPrevencionExterna
 from models import *
+from django.contrib.admin.models import LogEntry
+
+class LogEntryAdmin(admin.ModelAdmin):
+    date_hierarchy = 'action_time'
+    list_filter = [
+        'user',
+        'content_type',
+        'action_flag'
+    ]
+
+    search_fields = [
+        'object_repr',
+        'change_message'
+    ]
+
+
+    list_display = [
+        'action_time',
+        'user',
+        'content_type',
+        'action_flag',
+        'change_message',
+    ]
+admin.site.register(LogEntry, LogEntryAdmin)
 
 class RelacionInline(admin.TabularInline):
     model = Relacion
