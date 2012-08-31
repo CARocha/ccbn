@@ -225,7 +225,7 @@ class InscripcionPVBGExternaInline(admin.TabularInline):
 
 class PersonaAdmin(admin.ModelAdmin):
     list_filter = ['barrio','ciudad']
-    search_fields = ['primer_nombre','segundo_nombre','primer_apellido','segundo_apellido', 'codigo']
+    search_fields = ['primer_nombre','segundo_nombre','primer_apellido','segundo_apellido','id']
     list_display = ['individuos','fecha_nacimiento','sexo','municipio', 'ciudad','barrio']
     add_form_template = 'admin/registro/add_form_template.html'
     fieldsets = [
