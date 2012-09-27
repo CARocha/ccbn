@@ -79,6 +79,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+
 )
 
 ROOT_URLCONF = 'ccbn.urls'
@@ -102,9 +104,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'django.contrib.flatpages',
     'autocomplete',
     'south',
     'smart_selects',
+    'tinymce',
+    'flatpages_tinymce',
 
     'lugar',
     'sistema',
@@ -143,6 +148,18 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+    'theme_advanced_toolbar_location' : 'top',
+    'theme_advanced_toolbar_align': 'left',
+    'theme_advanced_buttons1': 'bold,italic,underline,|,bullist,numlist,|,undo,redo,|,link,unlink',
+    'theme_advanced_buttons2': '',
+    'theme_advanced_buttons3' : '',
 }
 
 ADMIN_MEDIA_PREFIX = ''

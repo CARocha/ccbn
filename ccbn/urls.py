@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^programas/indicadores/(?P<id>\d+)/$', 'ccbn.views.estrategia_detail', name='estrategia_detail'),    
     url(r'^chaining/', include('smart_selects.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^tinymce/', include('tinymce.urls')),
 )
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns

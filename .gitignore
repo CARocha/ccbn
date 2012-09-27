@@ -6,3 +6,5 @@ settings_local.py
 *.sublime-project
 *.sublime-workspace
 *.sqlite3
+files/static/
+files/media/

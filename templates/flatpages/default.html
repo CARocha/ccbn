@@ -1,0 +1,20 @@
+{% extends "baseadmin.html" %}
+{% load ccbn_tags %}
+
+{% block title %}{{estrategia.nombre}}{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" src="/files/js/bowser.min.js"></script>
+<script type="text/javascript" src="/files/js/jquery.graph.min.js"></script>
+{% endblock %}
+
+{% block contenido %}
+<div class="grid_12">
+	<div class="tablero-titulo">
+	{{flatpage.title}}
+	</div>
+</div><br><br>
+<div class="grid_12">
+	{{ flatpage.content|safe}}
+</div>
+{% endblock %}
