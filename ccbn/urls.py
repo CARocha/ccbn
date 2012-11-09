@@ -15,11 +15,14 @@ urlpatterns = patterns('',
     url(r'^$', 'django.contrib.auth.views.login', {'template_name': 'index.html'}),
     url(r'^logout/$', 'ccbn.views.logout_page'),
     url(r'^programas/$', 'ccbn.views.salidas_list', name='salidas_list'),    
-    url(r'^programas/indicadores/$', 'django.contrib.auth.views.login', {'template_name': 'indicadores.html'}),
+    #url(r'^programas/indicadores/$', 'django.contrib.auth.views.login', {'template_name': 'indicadores.html'}),
     url(r'^programas/indicadores/(?P<id>\d+)/$', 'ccbn.views.estrategia_detail', name='estrategia_detail'),    
     url(r'^chaining/', include('smart_selects.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^tinymce/', include('tinymce.urls')),
+
+    url(r'^modulo/biblioteca/$',direct_to_template,{'template': 'biblioteca.html'}),
+
 )
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
