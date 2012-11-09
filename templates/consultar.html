@@ -50,10 +50,12 @@
     </form>
     </div>
 
+
+<div class="tabbable">
     <ul class="nav nav-tabs" id="myTab">
-      <li class="active"><a href="#est">Estudiantes</a></li>
-      <li><a href="#bar">Barrio</a></li>
-      <li><a href="#esc">Escolaridad</a></li>
+      <li class="active" ><a href="#est" data-toggle="tab">Estudiantes</a></li>
+      <li><a href="#bar" data-toggle="tab">Barrio</a></li>
+      <li><a href="#esc" data-toggle="tab">Nivel Academico</a></li>
     </ul>
 
 
@@ -61,7 +63,7 @@
       <div class="tab-pane active" id="est">
             <div class="label">{{lista|length}} Personas</div><br><br>
              
-            <table class="table table-bordered">
+            <table class="table table-bordered table-condensed">
                 <caption> </caption>
                     <thead>
                      <tr>
@@ -85,14 +87,15 @@
                     
                 </tbody>
             </table>
+
+
       </div>
       <div class="tab-pane" id="bar">
-            <table>
-                <caption>barrios</caption>
+            <table class='table table-bordered table-condensed'>
                 <thead>
                     <tr>
-                        <th>nombre</th>
-                        <th>cantidad</th>
+                        <th>Nombre de barrio</th>
+                        <th>Cantidad de visitantes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,12 +110,11 @@
             </table>
       </div>
       <div class="tab-pane" id="esc">
-            <table>
-                <caption>nivel academico</caption>
+            <table class='table table-bordered table-condensed'>
                 <thead>
                     <tr>
-                        <th>nombre</th>
-                        <th>cantidad</th>
+                        <th>Nivel academico</th>
+                        <th>Cantidad de visitantes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -128,6 +130,7 @@
       </div>
     </div>
      
+</div>
 </div>
 <div class="clear"></div>
     <script>
