@@ -4,6 +4,8 @@ from django.db.models import get_model
 from django.template import RequestContext
 from sistema.models import Salida
 from models import *
+from registro.models import *
+from registro.forms import *
 
 def testing(request):
     id = request.GET.get('id', 1)
@@ -18,3 +20,42 @@ def testing(request):
         tipo_meta = query.count()
 
     return render_to_response('index2.html', RequestContext(request, locals()))
+
+
+def _query_set_filtrado(request):
+    params = {}
+    if request.session['sexo']:
+        params['sexo'] = request.session['sexo']
+        
+    if request.session['edad1']:
+        edad1 = int(request.session['edad1'])
+    if request.session['edad2']:
+        edad2 = int(request.session['edad2']) 
+
+    encuestas = Persona.objects.filter( ** params)
+
+    return encuestas
+
+def consultar(request):
+    if request.method == 'POST':
+        form = ChatelEdad(request.POST)
+        if form.is_valid():
+            request.session['sexo'] = form.cleaned_data['sexo']
+            request.session['edad1'] = form.cleaned_data['edad1']
+            request.session['edad2'] = form.cleaned_data['edad2']
+           
+    else:
+        form = ChatelEdad()       
+    return render_to_response('consultar.html', RequestContext(request, locals()))
+
+
+def filtrado_chatel(request):
+    fichas = _query_set_filtrado(request)
+    print request.session['edad1']
+    print request.session['edad2']
+    lista = []
+    for k in fichas:
+        if k.edad_chatel() in range(request.session['edad1'],request.session['edad2']+1):
+            lista.append(k)
+    print lista
+    return render_to_response('edad.html', RequestContext(request, locals()))

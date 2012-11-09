@@ -8,3 +8,4 @@ settings_local.py
 *.sqlite3
 files/static/
 files/media/
+*.sql
