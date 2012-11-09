@@ -1,21 +1,7 @@
 {% extends "base.html" %}
 
 {% block contenido %}
-	 <form method="POST" action="." id="consultar-form">{% csrf_token %}
-        <div class="general">
 
-            <div class="label">{{form.sexo.label}}</div>
-            <div class="filtros">{{form.sexo}}<br>{{form.sexo.errors}}</div>
-            <div class="clean"></div>
-            <div class="label">{{form.edad1.label}}</div>
-            <div class="filtros">{{form.edad1}}<br>{{form.edad1.errors}}</div>
-            <div class="clean"></div>
-            <div class="label">{{form.edad2.label}}</div>
-            <div class="filtros">{{form.edad2}}<br>{{form.edad2.errors}}</div>
-            <div class="clean"></div>
-        </div>
-        <button class="consultar">Ver</button>
-    </form>
 
 <div class="grid_12">
     <div class="tablero-titulo">
@@ -31,7 +17,7 @@
 
 <div class="grid_12">
     <div class="well well-small">
-        <form>
+       <!-- <form>
             <label>Establecer rango de edad</label>
             <input type="text" placeholder="Edad inicial">
             <input type="text" placeholder="Edad final">
@@ -46,6 +32,22 @@
               <button type="submit" class="btn btn-primary">Consultar</button>
  
         </form>
+        -->
+     <form method="POST" action="." id="consultar-form">{% csrf_token %}
+        <div class="general">
+
+            <div class="label">{{form.sexo.label}}</div>
+            <div class="filtros">{{form.sexo}}<br>{{form.sexo.errors}}</div>
+            <div class="clean"></div>
+            <div class="label">{{form.edad1.label}}</div>
+            <div class="filtros">{{form.edad1}}<br>{{form.edad1.errors}}</div>
+            <div class="clean"></div>
+            <div class="label">{{form.edad2.label}}</div>
+            <div class="filtros">{{form.edad2}}<br>{{form.edad2.errors}}</div>
+            <div class="clean"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Consultar</button>
+    </form>
     </div>
 
     <ul class="nav nav-tabs" id="myTab">
@@ -53,32 +55,34 @@
       <li><a href="#bar">Barrio</a></li>
       <li><a href="#esc">Escolaridad</a></li>
     </ul>
-     
+
+
     <div class="tab-content">
       <div class="tab-pane active" id="est">
-            <div class="label">100 resultados</div><br><br>
+            <div class="label">{{lista|length}} Personas</div><br><br>
+             
             <table class="table table-bordered">
-            <thead>
-             <tr>
-                <th>Apellido</th>
-                <th>Nombre</th>
-                <th>Edad</th>
-                <th>Escolaridad</th>
-             </tr>
-             </thead>
-             <tbody>
-             <tr>
-                <td>Apellido</td>
-                <td>Nombre</td>
-                <td>Edad</td>
-                <td>Escolaridad</td>
-             </tr>
-             <tr>
-                <td>Apellido</td>
-                <td>Nombre</td>
-                <td>Edad</td>
-                <td>Escolaridad</td>
-             </tr>
+                <caption> </caption>
+                    <thead>
+                     <tr>
+                        <th>Id</th>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Escolaridad</th>
+                     </tr>
+                     </thead>
+                <tbody>
+                    {% for obj in lista %}
+                        <tr>
+                            <td>{{obj.id}}</td>
+                            <td>{{obj.primer_apellido}}</td>
+                            <td>{{obj.primer_nombre}}</td>
+                            <td>{{obj.fecha_nacimiento}}</td>
+                            <td>{{obj.get_nivel_academico_display}}</td>
+                        </tr>
+                    {% endfor %}
+                    
                 </tbody>
             </table>
       </div>
@@ -97,5 +101,5 @@
         $('#myTab a:first').tab('show');
       })
     </script>
-    
+
 {% endblock contenido %}
