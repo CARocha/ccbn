@@ -1,5 +1,24 @@
 {% extends "base.html" %}
 
 {% block contenido %}
-	{{lista|length}}
+	
+<table>
+	<caption> {{lista|length}} Personas</caption>
+	<thead>
+		<tr>
+			<th>Nombre de los alumnos</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for obj in lista %}
+			<tr>
+				<td>{{obj}}</td>
+			</tr>
+		{% endfor %}
+		
+	</tbody>
+</table>
+
+	
+
 {% endblock contenido %}
