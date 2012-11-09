@@ -45,7 +45,19 @@ def consultar(request):
             request.session['edad2'] = form.cleaned_data['edad2']
            
     else:
-        form = ChatelEdad()       
+        form = ChatelEdad()
+    fichas = _query_set_filtrado(request)
+    #print request.session['edad1']
+    #print request.session['edad2']
+    lista = []
+    for k in fichas:
+        if k.edad_chatel() in range(request.session['edad1'],request.session['edad2']+1):
+            lista.append(k)
+    
+    #lista_barrio = {}
+    #for barrio in Barrio.objects.all():
+        #lista_barrio[barrio] = lista.objects.filter(barrio=barrio).count()
+    print dir(lista)       
     return render_to_response('consultar.html', RequestContext(request, locals()))
 
 
@@ -62,4 +74,4 @@ def filtrado_chatel(request):
     #for barrio in Barrio.objects.all():
         #lista_barrio[barrio] = lista.objects.filter(barrio=barrio).count()
     print dir(lista)
-    return render_to_response('edad.html', RequestContext(request, locals()))
+    return render_to_response('consultar.html', RequestContext(request, locals()))
