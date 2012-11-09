@@ -58,8 +58,16 @@ def filtrado_chatel(request):
         if k.edad_chatel() in range(request.session['edad1'],request.session['edad2']+1):
             lista.append(k)
     
-    #lista_barrio = {}
-    #for barrio in Barrio.objects.all():
-        #lista_barrio[barrio] = lista.objects.filter(barrio=barrio).count()
-    print dir(lista)
+    lista_barrio = {}
+    for barrio in Barrio.objects.all():
+        numero = [obj for obj in lista if obj.barrio == barrio]
+        if len(numero) > 0:
+            lista_barrio[barrio] = len(numero)
+    #print lista_barrio
+    lista_academico = {}
+    for clase in NIVEL_ACADEMICO_CHOICE:
+        numero = [obj for obj in lista if obj.nivel_academico == clase[0]]
+        if len(numero) > 0:
+            lista_academico[clase[1]] = len(numero)
+
     return render_to_response('edad.html', RequestContext(request, locals()))

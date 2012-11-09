@@ -19,6 +19,44 @@
 	</tbody>
 </table>
 
+<table>
+	<caption>barrios</caption>
+	<thead>
+		<tr>
+			<th>nombre</th>
+			<th>cantidad</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for k,v in lista_barrio.items  %}
+		<tr>
+			<td>{{k}}</td>
+			<td>{{v}}</td>
+		</tr>
+		{% endfor %}
+		
+	</tbody>
+</table>
+
+<table>
+	<caption>nivel academico</caption>
+	<thead>
+		<tr>
+			<th>nombre</th>
+			<th>cantidad</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for k,v in lista_academico.items  %}
+		<tr>
+			<td>{{k}}</td>
+			<td>{{v}}</td>
+		</tr>
+		{% endfor %}
+		
+	</tbody>
+</table>
+
 	
 
 {% endblock contenido %}
