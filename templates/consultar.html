@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "baseadmin.html" %}
 
 {% block contenido %}
 
@@ -10,7 +10,7 @@
 </div>
 <div class="grid_12">
     <div class="breadcrumb">
-        <a href="/programas" class="orange">Modulo biblioteca</a>
+        <a href="/registro/consultar/" class="orange">Modulo biblioteca</a>
     </div>
     <br>
 </div>
@@ -71,6 +71,7 @@
                         <th>Apellido</th>
                         <th>Nombre</th>
                         <th>Edad</th>
+                        <th>Fecha Nacimiento</th>
                         <th>Escolaridad</th>
                      </tr>
                      </thead>
@@ -81,6 +82,7 @@
                             <td>{{obj.primer_apellido}}</td>
                             <td>{{obj.primer_nombre}}</td>
                             <td>{{obj.edad_chatel}}</td>
+                            <td>{{obj.fecha_nacimiento}}</td>
                             <td>{{obj.get_nivel_academico_display}}</td>
                         </tr>
                     {% endfor %}
