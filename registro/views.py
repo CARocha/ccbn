@@ -6,6 +6,7 @@ from sistema.models import Salida
 from models import *
 from registro.models import *
 from registro.forms import *
+#from django.contrib.auth.decorators import login_required
 
 def testing(request):
     id = request.GET.get('id', 1)
@@ -36,6 +37,7 @@ def _query_set_filtrado(request):
 
     return encuestas
 
+#@login_required
 def consultar(request):
     if request.method == 'POST':
         form = ChatelEdad(request.POST)
