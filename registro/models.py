@@ -180,6 +180,18 @@ class Persona(models.Model):
        unique_together = (("primer_nombre","primer_apellido","sexo","fecha_nacimiento"),
                           )
     
+    def edad_chatel(self):
+        from datetime import date
+        today = date.today()
+        try: 
+            edad = self.fecha_nacimiento.replace(year=today.year)
+        except ValueError:
+            edad = self.fecha_nacimiento.replace(year=today.year, day=self.fecha_nacimiento.day-1)
+        if edad > today:
+            return today.year - self.fecha_nacimiento.year - 1
+        else:
+            return today.year - self.fecha_nacimiento.year
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.codigo = Persona.objects.all().count() + 1
