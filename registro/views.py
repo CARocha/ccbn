@@ -58,11 +58,8 @@ def filtrado_chatel(request):
         if k.edad_chatel() in range(request.session['edad1'],request.session['edad2']+1):
             lista.append(k)
     
-    lista_barrio = {}
-    conteo = 0
-    for barrio in Barrio.objects.all():
-        for obj in lista:
-            lista_barrio[barrio] = 
-    print lista_barrio
-    
+    #lista_barrio = {}
+    #for barrio in Barrio.objects.all():
+        #lista_barrio[barrio] = lista.objects.filter(barrio=barrio).count()
+    print dir(lista)
     return render_to_response('edad.html', RequestContext(request, locals()))
