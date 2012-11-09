@@ -43,28 +43,28 @@ def consultar(request):
             request.session['sexo'] = form.cleaned_data['sexo']
             request.session['edad1'] = form.cleaned_data['edad1']
             request.session['edad2'] = form.cleaned_data['edad2']
-           
+            fichas = _query_set_filtrado(request)
+            #print request.session['edad1']
+            #print request.session['edad2']
+            lista = []
+            for k in fichas:
+                if k.edad_chatel() in range(request.session['edad1'],request.session['edad2']+1):
+                    lista.append(k)
+            
+            lista_barrio = {}
+            for barrio in Barrio.objects.all():
+                numero = [obj for obj in lista if obj.barrio == barrio]
+                if len(numero) > 0:
+                    lista_barrio[barrio] = len(numero)
+            #print lista_barrio
+            lista_academico = {}
+            for clase in NIVEL_ACADEMICO_CHOICE:
+                numero = [obj for obj in lista if obj.nivel_academico == clase[0]]
+                if len(numero) > 0:
+                    lista_academico[clase[1]] = len(numero)        
     else:
         form = ChatelEdad()
-    fichas = _query_set_filtrado(request)
-    #print request.session['edad1']
-    #print request.session['edad2']
-    lista = []
-    for k in fichas:
-        if k.edad_chatel() in range(request.session['edad1'],request.session['edad2']+1):
-            lista.append(k)
-    
-    lista_barrio = {}
-    for barrio in Barrio.objects.all():
-        numero = [obj for obj in lista if obj.barrio == barrio]
-        if len(numero) > 0:
-            lista_barrio[barrio] = len(numero)
-    #print lista_barrio
-    lista_academico = {}
-    for clase in NIVEL_ACADEMICO_CHOICE:
-        numero = [obj for obj in lista if obj.nivel_academico == clase[0]]
-        if len(numero) > 0:
-            lista_academico[clase[1]] = len(numero)   
+  
     return render_to_response('consultar.html', RequestContext(request, locals()))
 
 
