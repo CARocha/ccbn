@@ -16,4 +16,86 @@
         </div>
         <button class="consultar">Ver</button>
     </form>
+
+<div class="grid_12">
+    <div class="tablero-titulo">
+
+    </div>
+</div>
+<div class="grid_12">
+    <div class="breadcrumb">
+        <a href="/programas" class="orange">Modulo biblioteca</a>
+    </div>
+    <br>
+</div>
+
+<div class="grid_12">
+    <div class="well well-small">
+        <form>
+            <label>Establecer rango de edad</label>
+            <input type="text" placeholder="Edad inicial">
+            <input type="text" placeholder="Edad final">
+            <label class="radio">
+              <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+              Masculino
+            </label>
+            <label class="radio">
+               <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+              Femenino
+            </label>
+              <button type="submit" class="btn btn-primary">Consultar</button>
+ 
+        </form>
+    </div>
+
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#est">Estudiantes</a></li>
+      <li><a href="#bar">Barrio</a></li>
+      <li><a href="#esc">Escolaridad</a></li>
+    </ul>
+     
+    <div class="tab-content">
+      <div class="tab-pane active" id="est">
+            <div class="label">100 resultados</div><br><br>
+            <table class="table table-bordered">
+            <thead>
+             <tr>
+                <th>Apellido</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Escolaridad</th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr>
+                <td>Apellido</td>
+                <td>Nombre</td>
+                <td>Edad</td>
+                <td>Escolaridad</td>
+             </tr>
+             <tr>
+                <td>Apellido</td>
+                <td>Nombre</td>
+                <td>Edad</td>
+                <td>Escolaridad</td>
+             </tr>
+                </tbody>
+            </table>
+      </div>
+      <div class="tab-pane" id="bar">
+        barrio
+      </div>
+      <div class="tab-pane" id="esc">
+        escolaridad
+      </div>
+    </div>
+     
+</div>
+<div class="clear"></div>
+    <script>
+      $(function () {
+        $('#myTab a:first').tab('show');
+      })
+    </script>
+    
 {% endblock contenido %}
