@@ -51,11 +51,18 @@ def consultar(request):
 
 def filtrado_chatel(request):
     fichas = _query_set_filtrado(request)
-    print request.session['edad1']
-    print request.session['edad2']
+    #print request.session['edad1']
+    #print request.session['edad2']
     lista = []
     for k in fichas:
         if k.edad_chatel() in range(request.session['edad1'],request.session['edad2']+1):
             lista.append(k)
-    print lista
+    
+    lista_barrio = {}
+    conteo = 0
+    for barrio in Barrio.objects.all():
+        for obj in lista:
+            lista_barrio[barrio] = 
+    print lista_barrio
+    
     return render_to_response('edad.html', RequestContext(request, locals()))
