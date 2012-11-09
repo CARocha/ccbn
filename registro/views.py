@@ -32,7 +32,7 @@ def _query_set_filtrado(request):
     if request.session['edad2']:
         edad2 = int(request.session['edad2']) 
 
-    encuestas = Persona.objects.filter( ** params)
+    encuestas = Persona.objects.filter( ** params).filter(modulopersona__biblioteca__code='biblioteca')
 
     return encuestas
 
@@ -63,7 +63,6 @@ def filtrado_chatel(request):
         numero = [obj for obj in lista if obj.barrio == barrio]
         if len(numero) > 0:
             lista_barrio[barrio] = len(numero)
-    #print lista_barrio
     lista_academico = {}
     for clase in NIVEL_ACADEMICO_CHOICE:
         numero = [obj for obj in lista if obj.nivel_academico == clase[0]]
