@@ -9,5 +9,5 @@ SEXO_CHOICE = (
 
 class ChatelEdad(forms.Form):
 	sexo = forms.ChoiceField(choices=SEXO_CHOICE)
-	edad1 = forms.IntegerField(required=False)
-	edad2 = forms.IntegerField(required=False) 
+	edad1 = forms.IntegerField(required=True)
+	edad2 = forms.IntegerField(required=True) 
