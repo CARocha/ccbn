@@ -7,6 +7,22 @@ from models import *
 from django.contrib.admin.models import LogEntry, DELETION
 from django.utils.html import escape
 from django.core.urlresolvers import reverse
+from django.forms.models import BaseInlineFormSet
+
+
+class RequiredInlineFormSet(BaseInlineFormSet):
+    """
+    Generates an inline formset that is required
+    encontrado en http://stackoverflow.com/questions/1206903/how-do-i-require-an-inline-in-the-django-admin
+    """
+
+    def _construct_form(self, i, **kwargs):
+        """
+        Override the method to change the form attribute empty_permitted
+        """
+        form = super(RequiredInlineFormSet, self)._construct_form(i, **kwargs)
+        form.empty_permitted = False
+        return form
 
 class LogEntryAdmin(admin.ModelAdmin):
     date_hierarchy = 'action_time'
@@ -88,6 +104,7 @@ class RegistroBibliotecaInline(admin.StackedInline):
     model = RegistroBiblioteca
     extra = 1
     max_num = 1
+    formset = RequiredInlineFormSet
     verbose_name_plural = u'Registro en Biblioteca'
 
 # Formacion Basica Inline
