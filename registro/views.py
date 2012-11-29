@@ -33,9 +33,8 @@ def _query_set_filtrado(request):
         edad1 = int(request.session['edad1'])
     if request.session['edad2']:
         edad2 = int(request.session['edad2']) 
-    #encuestas = Persona.objects.filter( ** params).filter(modulopersona__biblioteca__code='biblioteca')
-    print ano_sel
-    encuestas = Persona.objects.filter(registrobiblioteca__fecha__year=ano_sel)
+    encuestas = Persona.objects.filter( ** params).filter(modulopersona__biblioteca__code='biblioteca').filter(registrobiblioteca__fecha__year=ano_sel)
+    #encuestas = Persona.objects.filter(registrobiblioteca__fecha__year=ano_sel)
     return encuestas
 
 #@login_required
