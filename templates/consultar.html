@@ -36,6 +36,9 @@
      <form method="POST" action="." id="consultar-form">{% csrf_token %}
         <div class="general">
 
+            <label>Año</label>
+            <div class="filtros">{{form.ano}}<br>{{form.ano.errors}}</div>
+            <div class="clean"></div>
             <label>{{form.sexo.label}}</label>
             <div class="filtros">{{form.sexo}}<br>{{form.sexo.errors}}</div>
             <div class="clean"></div>
