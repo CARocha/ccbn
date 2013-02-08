@@ -327,7 +327,7 @@ class InscripcionCurso(models.Model):
 
 # Registro en Biblioteca, solo una vez
 class RegistroBiblioteca(models.Model):
-    fecha = models.DateField(default=datetime.date.today(), verbose_name = u'Fecha de registro')
+    fecha = models.DateField(verbose_name = u'Fecha de registro')
     persona = models.OneToOneField(Persona)
 
     def __unicode__(self):
